@@ -1,1 +1,1 @@
-"""Modular page package for German Course AI."""
+"""Modular page package for English Course AI."""

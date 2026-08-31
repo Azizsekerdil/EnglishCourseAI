@@ -1,0 +1,2 @@
+Kendi İngilizce PDF, TXT, ses ve ders dosyalarınızı bu klasöre koyabilirsiniz.
+Uygulamadaki Ders Kitaplığı bu klasörü gösterir.

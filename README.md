@@ -9,7 +9,7 @@ English Course AI, İngilizce öğrenimi için yerel veriyi önceleyen bağıms�
 - SM-2 ve Leitner tabanlı aralıklı tekrar; günlük hedef ve seri
 - 160'ın üzerinde yerleşik A1 kelime; çoğul, sözcük türü ve örnek cümleler
 - İngilizce-Türkçe sözlük, favoriler ve yanlış kelimeler
-- Çift yönlü **İngilizce ↔ Türkçe öğrenci sözlüğü** sekmesi: 1.210+ gömülü madde, her maddede sade İngilizce tanım ve düzensiz fiil/çoğul biçimleri; yön otomatik, seslendirme, kelime bankasına ekleme, CSV/TSV içe/dışa aktarma
+- Çift yönlü **İngilizce ↔ Türkçe öğrenci sözlüğü** sekmesi: 1.210+ gömülü madde, her maddede sade İngilizce tanım ve düzensiz fiil/çoğul biçimleri; yön seçici (`Otomatik`, `EN → TR`, `TR → EN`; sabit yönde yalnızca kaynak dil aranır, seçim kaydedilir), seslendirme, kelime bankasına ekleme, CSV/TSV içe/dışa aktarma (başlık satırı tanınır, sütun sırası serbest)
 - **AI destekli sözlük**: sözlükte bulunmayan kelimeler LM Studio'ya ya da alternatif bir OpenAI uyumlu uç noktaya (NVIDIA NIM veya herhangi bir URL + API anahtarı) yapılandırılmış JSON olarak sorulur; sonuçlar (Türkçe çeviri, sade İngilizce tanım, örnek cümle) yerel sözlüğe önbelleklenir ve sonraki aramalar çevrimdışı çalışır
 - Kart, çoktan seçmeli, yazma, dinleme ve eşleştirme çalışma seçenekleri
 - CEFR A1-C1 profili ve puanlanan sınav motoru
@@ -78,7 +78,7 @@ API anahtarı Windows Kimlik Bilgisi Yöneticisi'nde (`EnglishCourseAI/alt_api_k
 python -m pytest -q
 ```
 
-Testler pencere/18 sayfa kurulumu, anlık ve kalıcı dil değişimi, i18n bütünlüğü, SQLite geçişi, 150+ kelime, 1.210+ maddelik sözlük motoru (iki yönlü arama, içe/dışa aktarma, SQLite kullanıcı maddeleri), yerel sahte OpenAI sunucusuyla AI sözlük araması (JSON ayrıştırma, Bearer başlığı, sağlayıcı seçimi, sözlük sekmesi akışı), gizli anahtar deposu (dosya arka ucu), `dict_entries` şema geçişi, SRS, kart/sınav akışı, büyük-küçük harf duyarsız arama, apostrof ve kısa çizgi duyarlı doğru yazım, Unicode CSV, AI çevrimdışı davranışı, token gizliliği ve paket turunu kapsar. Testler gerçek ağa ya da Kimlik Bilgisi Yöneticisi'ne asla dokunmaz.
+Testler pencere/18 sayfa kurulumu, anlık ve kalıcı dil değişimi, i18n bütünlüğü, SQLite geçişi, 150+ kelime, 1.210+ maddelik sözlük motoru (sabit ve otomatik yönler, içe/dışa aktarma, SQLite kullanıcı maddeleri), yerel sahte OpenAI sunucusuyla AI sözlük araması (JSON ayrıştırma, Bearer başlığı, sağlayıcı seçimi, sözlük sekmesi akışı), gizli anahtar deposu (dosya arka ucu), `dict_entries` şema geçişi, SRS, kart/sınav akışı, büyük-küçük harf duyarsız arama, apostrof ve kısa çizgi duyarlı doğru yazım, Unicode CSV, AI çevrimdışı davranışı, token gizliliği ve paket turunu kapsar. Testler gerçek ağa ya da Kimlik Bilgisi Yöneticisi'ne asla dokunmaz.
 
 ## Ücretsiz kaynak kataloğu
 

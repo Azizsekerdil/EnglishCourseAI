@@ -41,6 +41,7 @@ done
   --osx-bundle-identifier "com.englishcourseai.desktop" \
   "${ICON_ARGS[@]}" "${DATA_ARGS[@]}" \
   --hidden-import pypdf \
+  --hidden-import eca.secrets --hidden-import eca.dictionary --hidden-import eca.dict_data --hidden-import eca.tabs.dictionary \
   English_Course_AI.pyw
 
 APP_PATH="dist/EnglishCourseAI.app"

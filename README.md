@@ -9,6 +9,7 @@ English Course AI, İngilizce öğrenimi için yerel veriyi önceleyen bağıms�
 - SM-2 ve Leitner tabanlı aralıklı tekrar; günlük hedef ve seri
 - 160'ın üzerinde yerleşik A1 kelime; çoğul, sözcük türü ve örnek cümleler
 - İngilizce-Türkçe sözlük, favoriler ve yanlış kelimeler
+- Çift yönlü **İngilizce ↔ Türkçe öğrenci sözlüğü** sekmesi: 1.210+ gömülü madde, her maddede sade İngilizce tanım ve düzensiz fiil/çoğul biçimleri; yön otomatik, seslendirme, AI'a sorma, kelime bankasına ekleme, CSV/TSV içe/dışa aktarma
 - Kart, çoktan seçmeli, yazma, dinleme ve eşleştirme çalışma seçenekleri
 - CEFR A1-C1 profili ve puanlanan sınav motoru
 - Kısa/uzun ünlüler, iki `th` sesi, `sh/ch`, sessiz harfler, `-ed` ve `-s` okunuşları, apostrof, UK/US yazımı, vurgu ve dikte laboratuvarı
@@ -65,7 +66,7 @@ LM Studio kapalıysa uygulama çalışmaya devam eder; yalnız AI özellikleri d
 python -m pytest -q
 ```
 
-Testler pencere/17 sayfa kurulumu, anlık ve kalıcı dil değişimi, i18n bütünlüğü, SQLite geçişi, 150+ kelime, SRS, kart/sınav akışı, büyük-küçük harf duyarsız arama, apostrof ve kısa çizgi duyarlı doğru yazım, Unicode CSV, AI çevrimdışı davranışı, token gizliliği ve paket turunu kapsar.
+Testler pencere/18 sayfa kurulumu, anlık ve kalıcı dil değişimi, i18n bütünlüğü, SQLite geçişi, 150+ kelime, 1.210+ maddelik sözlük motoru (iki yönlü arama, içe/dışa aktarma, SQLite kullanıcı maddeleri), SRS, kart/sınav akışı, büyük-küçük harf duyarsız arama, apostrof ve kısa çizgi duyarlı doğru yazım, Unicode CSV, AI çevrimdışı davranışı, token gizliliği ve paket turunu kapsar.
 
 ## Ücretsiz kaynak kataloğu
 

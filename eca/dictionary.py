@@ -191,6 +191,29 @@ def first_sense(text: str) -> str:
     return next((s.strip() for s in re.split(r"[;/]", text or "") if s.strip()), "")
 
 
+# A Turkish query may be typed on an ASCII keyboard or in capitals: the comparison key folds the
+# Turkish letters ("sinav" == "SINAV" == "sınav", "cok" == "çok"). Only the side that carries the
+# Turkish text uses it, so the target-language folding rules (umlauts, accents) stay untouched.
+_TR_FOLD = str.maketrans({"ı": "i", "İ": "i", "ş": "s", "Ş": "s", "ğ": "g", "Ğ": "g", "ç": "c",
+                          "Ç": "c", "ö": "o", "Ö": "o", "ü": "u", "Ü": "u", "â": "a", "î": "i", "û": "u"})
+
+
+def tr_fold(text: str) -> str:
+    """Fold the Turkish letters of a raw string onto their ASCII counterparts."""
+    return (text or "").translate(_TR_FOLD)
+
+
+# A fold-only match ranks below a direct one: someone typing "ask" wants English "to ask", not
+# Turkish "aşk"; a query like "sinav" that matches nothing directly is still found.
+FOLD_MAX = 59        # folded scores are scaled onto this ceiling: exact 59, prefix 35, substring 5
+
+
+def _tr_norm(text: str) -> str:
+    """Comparison key for the Turkish side: fold FIRST, then normalise, so the target-language
+    rules (German ö -> oe, French accent stripping) never reshape a Turkish word."""
+    return _norm(tr_fold(text))
+
+
 def _senses(text: str) -> list[str]:
     """Split ';'-separated senses; also add each sense without its '(qualifier)'."""
     out: list[str] = []
@@ -322,6 +345,7 @@ class Dictionary:
             sides = (forced,) if forced else _SIDES
         else:
             sides = (source_field(direction),)
+        q_tr = _tr_norm(query)                      # Turkish side key: "sinav" == "SINAV" == "sınav"
         scored: list[tuple[int, int, int, Entry]] = []
         best = {side: 0 for side in _SIDES}
         for e in self._entries:
@@ -332,8 +356,10 @@ class Dictionary:
                 if e.plural:
                     forms.append(_norm(e.plural))
                 scores["headword"] = _score(q, head, forms)
-            if "translation" in sides:
-                scores["translation"] = _score(q, _norm(e.translation), _senses(e.translation))
+            if "translation" in sides:                       # Turkish column here: direct match, then folded key
+                plain = _score(q, _norm(e.translation), _senses(e.translation))
+                scores["translation"] = plain or (
+                    _score(q_tr, _tr_norm(e.translation), [_tr_norm(x) for x in _senses(e.translation)]) * FOLD_MAX // 100)
             if NOTE_SIDE in sides and not any(scores.values()) and e.note and len(q) >= 3:
                 scores[NOTE_SIDE] = 8 if _score(q, _norm(e.note), []) >= 30 else 0      # definition / usage note as a last resort
             if "tr" in sides and e.tr:

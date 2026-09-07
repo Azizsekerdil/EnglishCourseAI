@@ -1,6 +1,6 @@
 # English Course AI - Kullanım Kılavuzu
 
-Sürüm 1.2.0 · Windows ve macOS masaüstü uygulaması · Arayüz dilleri: Türkçe ve English
+Sürüm 1.2.1 · Windows ve macOS masaüstü uygulaması · Arayüz dilleri: Türkçe ve English
 
 - [1. Bu kılavuz hakkında](#1-bu-kılavuz-hakkında)
 - [2. Kurulum](#2-kurulum)
@@ -18,7 +18,7 @@ Sürüm 1.2.0 · Windows ve macOS masaüstü uygulaması · Arayüz dilleri: Tü
 
 ## 1. Bu kılavuz hakkında
 
-Bu kılavuz **English Course AI** sürüm **1.2.0** içindir. Uygulama, ana dili Türkçe olan öğrenciler için hazırlanmış, verilerini sizin bilgisayarınızda tutan bağımsız bir İngilizce çalışma ortamıdır. Tekrar, sözlük, laboratuvarlar, sınav, PDF notları ve ilerleme internet olmadan çalışır; yapay zeka özellikleri isteğe bağlıdır.
+Bu kılavuz **English Course AI** sürüm **1.2.1** içindir. Uygulama, ana dili Türkçe olan öğrenciler için hazırlanmış, verilerini sizin bilgisayarınızda tutan bağımsız bir İngilizce çalışma ortamıdır. Tekrar, sözlük, laboratuvarlar, sınav, PDF notları ve ilerleme internet olmadan çalışır; yapay zeka özellikleri isteğe bağlıdır.
 
 Baştan sona okumanız gerekmez: yeni başlıyorsanız [2](#2-kurulum), [3](#3-uygulamayı-ilk-çalıştırma) ve [4](#4-ekranlar) bölümleri yeterlidir; sözlüğü yoğun kullanacaksanız [5. bölüm](#5-sözlük-ayrıntılı), yapay zeka bağlayacaksanız [6. bölüm](#6-yapay-zeka), bir şey beklediğiniz gibi çalışmıyorsa [9. bölüm](#9-sorun-giderme) size göredir. Düğme ve alan adları arayüzün Türkçe dilindeki biçimiyle yazılmış, İngilizce karşılıkları yararlı olduğunda parantez içinde verilmiştir.
 
@@ -73,7 +73,7 @@ $env:ECA_HOME = "E:\EnglishCourseAI-veri"
 
 ## 3. Uygulamayı ilk çalıştırma
 
-Pencere 1360 × 860 boyutunda açılır (en küçük 1080 × 700) ve başlıkta `English Course AI 1.2.0` yazar. Solda gruplanmış sayfa listesi, üstte araç şeridi, altta durum çubuğu vardır. Üst şeritte sayfa başlığı, `🌐` ile **arayüz dili** kutusu (`Türkçe` / `English`), yeni profil açan **+** düğmesi, **profil** kutusu ve sağ uçta `AI: Kullanılabilir` / `AI: Kullanılamıyor` rozeti bulunur.
+Pencere 1360 × 860 boyutunda açılır (en küçük 1080 × 700) ve başlıkta `English Course AI 1.2.1` yazar. Solda gruplanmış sayfa listesi, üstte araç şeridi, altta durum çubuğu vardır. Üst şeritte sayfa başlığı, `🌐` ile **arayüz dili** kutusu (`Türkçe` / `English`), yeni profil açan **+** düğmesi, **profil** kutusu ve sağ uçta `AI: Kullanılabilir` / `AI: Kullanılamıyor` rozeti bulunur.
 
 İlk açılışta uygulama sizden hiçbir şey istemez; veri klasörünü ve `EnglishCourseAI.db` veritabanını oluşturur, `Alex` adlı varsayılan profili açar, Kelime Bankası'na 162 kelimelik A1 düzeyi başlangıç setini yükler (kelimeler Temel, Fiiller, Yiyecek gibi 20 konu destesine dağıtılmıştır) ve 1210 maddelik gömülü sözlüğü hazırlar (indirme gerekmez).
 
@@ -480,7 +480,8 @@ Uygulamada menü kısayolu yoktur; aşağıdakiler kodda tanımlı gerçek kısa
 | **v1.1.0** | **Sözlük EN-TR** sekmesi (1210 gömülü madde, çift yönlü arama, seslendirme, CSV içe/dışa aktarma) ve sözlük için **AI bağlantısı**: LM Studio ya da OpenAI uyumlu alternatif uç nokta, anahtar Kimlik Bilgisi Yöneticisi'nde, sonuçlar yerel sözlüğe önbelleklenir |
 | **v1.1.1** | Düşünen modellerde boş yanıt düzeltmesi (`reasoning_effort`) ve uzman modelleri eleyen model seçimi |
 | **v1.1.2** | Sözlük AI cilası: ek bilgi alanının temizlenmesi, AI yanıtından sonra yön etiketi, araç şeridinin ayrı satıra alınması, tekrar eden anlamların ayıklanması |
-| **v1.2.0** | **Yön seçici**: `Otomatik`, `EN → TR`, `TR → EN`; sabit yönde yalnızca kaynak taraf aranır ve seçim ayarlara kaydedilir. Türkçe sözlük motorunda tam bir üçüncü dil olarak ele alınır; CSV içe aktarımı başlık satırını tanır ve sütunları herhangi bir sırada kabul eder; Türkçe sorgular ASCII klavyeyle ya da büyük harfle yazıldığında da bulunur (`IŞIK` = `ışık` = `isik`) |
+| **v1.2.0** | **Yön seçici**: `Otomatik`, `EN → TR`, `TR → EN`; sabit yönde yalnızca kaynak taraf aranır ve seçim ayarlara kaydedilir. Türkçe sözlük motorunda tam bir üçüncü dil olarak ele alınır; CSV içe aktarımı başlık satırını tanır ve sütunları herhangi bir sırada kabul eder |
+| **v1.2.1** | Türkçe aramada **ASCII ve büyük harf desteği**: `sinav` = `SINAV` = `sınav`, `cok` = `çok`, `ogrenci` = `öğrenci`. Türkçe sütunu karşılaştırmada ASCII'ye katlanır, gösterilen yazım değişmez ve katlanarak bulunan eşleşme doğrudan eşleşmenin altına oranlanır; böylece `ask` yazan kullanıcı İngilizce karşılığını alır. Ayrıca bu **kullanım kılavuzu** (Türkçe ve İngilizce) depoya eklendi; PDF sürümü sürüm ekleri arasında yayımlanır |
 
 ## 11. Sık sorulan sorular
 

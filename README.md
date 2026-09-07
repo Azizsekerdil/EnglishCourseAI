@@ -2,6 +2,8 @@
 
 English Course AI, İngilizce öğrenimi için yerel veriyi önceleyen bağımsız bir Windows masaüstü uygulamasıdır. Türkçe ve English arayüzleri aynı özellik derinliğini sunar; kelime, yazım, telaffuz ve dilbilgisi içeriği İngilizce için hazırlanmıştır.
 
+**Kullanım kılavuzu:** [docs/KULLANIM_KILAVUZU.md](docs/KULLANIM_KILAVUZU.md) - kurulum, 18 ekran, sözlük ve yön seçimi, yapay zekâ kurulumu, veri yönetimi ve sorun giderme.
+
 > Temel çalışma özellikleri ve öğrenci verileri yereldir. Kaynak bağlantılarını açmak ve isteğe bağlı uzak servisleri kullanmak internet gerektirir; uygulama bu nedenle yanıltıcı bir “%100 çevrimdışı” iddiasında bulunmaz.
 
 ## Öne çıkan özellikler

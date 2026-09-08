@@ -18,3 +18,9 @@ python .\English_Course_AI.pyw
 Build the Windows application with `build.bat`; the output is `dist\EnglishCourseAI.exe`. User data is stored under `%APPDATA%\EnglishCourseAI`, or under the directory selected with `ECA_HOME`.
 
 The Resource Center links to verified free-access official learning sites and to openly licensed/public-domain collections. It does not bundle third-party course materials, and it preserves access, licence and attribution notes.
+
+## License
+
+English Course AI is released under the MIT License; the full text is in [LICENSE](LICENSE).
+
+The third-party components used by the application and embedded in the packaged builds are listed with their actual licences in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

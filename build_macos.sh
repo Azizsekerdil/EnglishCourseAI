@@ -35,6 +35,13 @@ for dir in assets Resources grammar; do
   [[ -d "$dir" ]] && DATA_ARGS+=(--add-data "$PROJECT_ROOT/$dir:$dir")
 done
 
+# Lisans metinleri uygulama paketinin içinde taşınır: MIT şartı ve gömülü
+# Apache-2.0 bileşenlerinin atıf yükümlülüğü bunu gerektirir.
+for file in LICENSE THIRD_PARTY_NOTICES.md; do
+  [[ -f "$file" ]] || { echo "HATA: $file bulunamadı."; exit 1; }
+  DATA_ARGS+=(--add-data "$PROJECT_ROOT/$file:.")
+done
+
 "$PYTHON_BIN" -m PyInstaller --noconfirm --clean --onedir --windowed \
   --workpath build/macos/pyinstaller --specpath build/macos \
   --name "EnglishCourseAI" \
@@ -46,6 +53,11 @@ done
 
 APP_PATH="dist/EnglishCourseAI.app"
 [[ -d "$APP_PATH" ]] || { echo "HATA: $APP_PATH oluşturulamadı."; exit 1; }
+
+for file in LICENSE THIRD_PARTY_NOTICES.md; do
+  [[ -f "$APP_PATH/Contents/Resources/$file" ]] \
+    || { echo "HATA: $file uygulama paketine eklenemedi."; exit 1; }
+done
 
 ditto -c -k --keepParent "$APP_PATH" "dist/EnglishCourseAI-macOS.zip"
 echo "Tamamlandı: $APP_PATH"

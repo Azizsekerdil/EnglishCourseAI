@@ -13,6 +13,7 @@ Version 1.2.1 · Windows and macOS desktop application · Interface languages: T
 - [9. Troubleshooting](#9-troubleshooting)
 - [10. Release notes summary](#10-release-notes-summary)
 - [11. Frequently asked questions](#11-frequently-asked-questions)
+- [12. Licence](#12-licence)
 
 ---
 
@@ -42,7 +43,7 @@ The package targets Apple Silicon and its bundle identifier is `com.englishcours
 
 ### Running from source
 
-Requirement: Python 3.11 or newer. The only external dependency is `pypdf`, used by the PDF Reader.
+Requirement: Python 3.11 or newer. Running from source has a single external dependency, `pypdf` (BSD-3-Clause), used by the PDF Reader. The packaged `.exe` and `.app` builds additionally embed the Python interpreter, Tcl/Tk and PyInstaller's launcher stub; all of them are itemised in [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
 
 ```powershell
 python -m venv .venv
@@ -508,3 +509,9 @@ The application has no menu accelerators; the following are the real shortcuts d
 **11. Why can I not compare my pronunciation with the microphone?** **◉ Compare with microphone** is not active in this version and shows **Unavailable**; the application does not record audio. Use the Pronunciation page for listening and IPA comparison.
 
 **12. Can two people use the same computer?** Yes. Create a second profile with the **+** button; the review schedule, exams, PDF notes and statistics are kept per profile, while the word list, the dictionary and the settings are shared.
+
+## 12. Licence
+
+English Course AI is released under the MIT License; the full text is in [`LICENSE`](../LICENSE) at the root of the repository. The vocabulary, dictionary, grammar and exercise content that ships with the application was written for this project and is covered by the same licence.
+
+Every third-party component the application uses, and everything embedded in the packaged builds (the Windows `.exe` and the macOS `.app`), is listed with its actual licence in [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md). The external sites in the Resource Center are not copied into the application; anything you download from them stays under its own licence.

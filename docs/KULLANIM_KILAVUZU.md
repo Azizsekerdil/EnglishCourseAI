@@ -13,6 +13,7 @@ Sürüm 1.2.1 · Windows ve macOS masaüstü uygulaması · Arayüz dilleri: Tü
 - [9. Sorun giderme](#9-sorun-giderme)
 - [10. Sürüm notları özeti](#10-sürüm-notları-özeti)
 - [11. Sık sorulan sorular](#11-sık-sorulan-sorular)
+- [12. Lisans](#12-lisans)
 
 ---
 
@@ -42,7 +43,7 @@ Paket Apple Silicon içindir ve kimliği `com.englishcourseai.desktop`.
 
 ### Kaynaktan çalıştırma
 
-Gereksinim: Python 3.11 veya üzeri. Tek dış bağımlılık, PDF Okuyucu için kullanılan `pypdf`'tir.
+Gereksinim: Python 3.11 veya üzeri. Kaynaktan çalıştırmanın tek dış bağımlılığı, PDF Okuyucu için kullanılan `pypdf`'tir (BSD-3-Clause). Paketlenmiş `.exe` ve `.app` sürümleri ayrıca Python yorumlayıcısını, Tcl/Tk'yi ve PyInstaller'ın açılış bileşenini içerir; hepsinin dökümü [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) dosyasındadır.
 
 ```powershell
 python -m venv .venv
@@ -508,3 +509,9 @@ Uygulamada menü kısayolu yoktur; aşağıdakiler kodda tanımlı gerçek kısa
 **11. Mikrofonla telaffuzumu neden karşılaştıramıyorum?** **◉ Mikrofonla karşılaştır** bu sürümde etkin değildir ve **Kullanılamıyor** yazar; uygulama ses kaydı almaz. Telaffuz sayfasını dinleme ve IPA karşılaştırması için kullanın.
 
 **12. Aynı bilgisayarda iki kişi çalışabilir mi?** Evet. **+** düğmesiyle ikinci bir profil açın; tekrar planı, sınavlar, PDF notları ve istatistikler profil başına ayrılır, kelime listesi ile sözlük ve ayarlar ortaktır.
+
+## 12. Lisans
+
+English Course AI, MIT Lisansı ile yayımlanır; tam metin depo kökündeki [`LICENSE`](../LICENSE) dosyasındadır. Uygulamayla gelen kelime, sözlük, dilbilgisi ve alıştırma içeriği bu proje için yazılmıştır ve aynı lisans kapsamındadır.
+
+Uygulamanın kullandığı ve paketlenmiş sürümlerin (Windows `.exe`, macOS `.app`) içinde yer alan üçüncü taraf bileşenlerin tamamı, gerçek lisanslarıyla birlikte [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) dosyasında listelenir. Kaynak Merkezi'ndeki dış kaynaklar uygulamaya kopyalanmaz; oradan indirdiğiniz her şey kendi lisansına tabidir.

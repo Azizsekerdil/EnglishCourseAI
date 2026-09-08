@@ -4,7 +4,10 @@ from pathlib import Path
 root = Path(SPEC).resolve().parent
 a = Analysis(
     [str(root / "English_Course_AI.pyw")], pathex=[str(root)], binaries=[],
-    datas=[(str(root / "assets"), "assets"), (str(root / "Resources"), "Resources"), (str(root / "grammar"), "grammar")],
+    # LICENSE ve THIRD_PARTY_NOTICES.md ikili paketin icinde tasinir:
+    # MIT sarti ve gomulu Apache-2.0 bilesenlerinin atif yukumlulugu bunu gerektirir.
+    datas=[(str(root / "assets"), "assets"), (str(root / "Resources"), "Resources"), (str(root / "grammar"), "grammar"),
+           (str(root / "LICENSE"), "."), (str(root / "THIRD_PARTY_NOTICES.md"), ".")],
     hiddenimports=["pypdf", "eca.secrets", "eca.dictionary", "eca.dict_data", "eca.tabs.dictionary"], hookspath=[], hooksconfig={}, runtime_hooks=[], excludes=[], noarchive=False,
 )
 pyz = PYZ(a.pure)

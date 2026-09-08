@@ -85,3 +85,9 @@ Testler pencere/18 sayfa kurulumu, anlık ve kalıcı dil değişimi, i18n büt�
 ## Ücretsiz kaynak kataloğu
 
 Katalog British Council LearnEnglish, BBC Learning English, Cambridge English ve VOA Learning English gibi ücretsiz erişimli resmî öğrenme sayfalarına; ayrıca Wikibooks, Tatoeba, LibriVox ve Project Gutenberg gibi açık/kamu malı koleksiyonlara bağlantı verir. Üçüncü taraf içerik uygulamaya kopyalanmaz. Her bağlantıda erişim/lisans ve atıf notu gösterilir; kamu malı durumu ülkeye göre değişebileceğinden yerel durum kontrol edilmelidir.
+
+## Lisans
+
+English Course AI, MIT Lisansı ile dağıtılır. Tam metin için [LICENSE](LICENSE) dosyasına bakın.
+
+Uygulamanın kullandığı ve paketlenmiş sürümlerin içinde yer alan üçüncü taraf bileşenler, gerçek lisanslarıyla birlikte [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) dosyasında listelenir.

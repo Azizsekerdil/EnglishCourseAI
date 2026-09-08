@@ -1,6 +1,13 @@
 # English Course AI
 
-English Course AI, İngilizce öğrenimi için yerel veriyi önceleyen bağımsız bir Windows masaüstü uygulamasıdır. Türkçe ve English arayüzleri aynı özellik derinliğini sunar; kelime, yazım, telaffuz ve dilbilgisi içeriği İngilizce için hazırlanmıştır.
+[![sürüm](https://img.shields.io/github/v/release/Azizsekerdil/EnglishCourseAI?display_name=tag&sort=semver&label=s%C3%BCr%C3%BCm&color=2ea44f)](https://github.com/Azizsekerdil/EnglishCourseAI/releases/latest)
+[![lisans MIT](https://img.shields.io/github/license/Azizsekerdil/EnglishCourseAI?label=lisans&color=blue)](LICENSE)
+[![platform Windows ve macOS](https://img.shields.io/badge/platform-Windows%20%7C%20macOS-0078D4)](https://github.com/Azizsekerdil/EnglishCourseAI/releases/latest)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/downloads/)
+
+**Türkçe** | [English](README.en.md)
+
+English Course AI, İngilizce öğrenimi için yerel veriyi önceleyen bağımsız bir masaüstü uygulamasıdır; Windows ve macOS için dağıtılır. Türkçe ve English arayüzleri aynı özellik derinliğini sunar; kelime, yazım, telaffuz ve dilbilgisi içeriği İngilizce için hazırlanmıştır.
 
 **Kullanım kılavuzu:** [docs/KULLANIM_KILAVUZU.md](docs/KULLANIM_KILAVUZU.md) - kurulum, 18 ekran, sözlük ve yön seçimi, yapay zekâ kurulumu, veri yönetimi ve sorun giderme.
 
@@ -25,6 +32,22 @@ English Course AI, İngilizce öğrenimi için yerel veriyi önceleyen bağıms�
 - Haftalık ilerleme raporu, açık/koyu tema ve öğrenci profilleri
 - Unicode CSV ve `.ecapack` paket içe/dışa aktarımı
 
+## İndirme
+
+Hazır paketi indirip doğrudan çalıştırabilirsiniz; Python kurmanız gerekmez. Tüm sürümler için [Sürümler sayfasına](https://github.com/Azizsekerdil/EnglishCourseAI/releases/latest) bakın.
+
+| Dosya | Bağlantı |
+| --- | --- |
+| Windows paketi | [EnglishCourseAI-Windows.zip](https://github.com/Azizsekerdil/EnglishCourseAI/releases/latest/download/EnglishCourseAI-Windows.zip) |
+| macOS paketi (Apple Silicon) | [EnglishCourseAI-macOS.zip](https://github.com/Azizsekerdil/EnglishCourseAI/releases/latest/download/EnglishCourseAI-macOS.zip) |
+| Kullanım kılavuzu (PDF) | [EnglishCourseAI-Kullanim-Kilavuzu.pdf](https://github.com/Azizsekerdil/EnglishCourseAI/releases/latest/download/EnglishCourseAI-Kullanim-Kilavuzu.pdf) |
+
+Bağlantılar her zaman en güncel sürümü verir. Windows'ta ZIP'i açın ve `EnglishCourseAI.exe` dosyasını çalıştırın.
+
+macOS paketi Apple Silicon için derlenmiştir ve **imzalanmamış, notarize edilmemiştir**. Bu nedenle ilk açılışta çift tıklama engellenir: `EnglishCourseAI.app` dosyasına **sağ tık → Aç** deyin ve çıkan uyarıda yeniden **Aç**'ı seçin. Sonraki açılışlarda bu adım gerekmez.
+
+Kaynaktan çalıştırmak isterseniz aşağıya bakın.
+
 ## Kurulum ve kaynaktan çalıştırma
 
 Gereksinim: Python 3.11 veya üzeri.
@@ -36,9 +59,11 @@ python -m pip install -r requirements.txt
 python .\English_Course_AI.pyw
 ```
 
-Öğrenci verileri `%APPDATA%\EnglishCourseAI` altında tutulur. Test veya taşınabilir deneme için `ECA_HOME` ortam değişkeniyle ayrı bir klasör seçilebilir.
+Öğrenci verileri Windows'ta `%APPDATA%\EnglishCourseAI`, macOS'ta `~/.englishcourseai` altında tutulur. Test veya taşınabilir deneme için `ECA_HOME` ortam değişkeniyle ayrı bir klasör seçilebilir.
 
-## Windows EXE üretimi
+## Paket üretimi (Windows ve macOS)
+
+### Windows EXE
 
 Paket **temiz bir sanal ortamdan** derlenir; böylece yalnızca `requirements.txt`
 içindeki kütüphaneler pakete girer. Genel `site-packages` kullanılırsa
@@ -57,6 +82,21 @@ $env:PYTHON = "$env:TEMP\EnglishCourseAI-venv\Scripts\python.exe"
 `dist\EnglishCourseAI-Windows.zip` (EXE + `LICENSE` + `THIRD_PARTY_NOTICES.md`).
 `build`, `dist` ve kullanıcı verileri Git deposuna alınmaz. Testleri çalıştırmak
 için `python -m pip install -r requirements-dev.txt`.
+
+### macOS uygulaması
+
+macOS paketi bir Mac üzerinde derlenir:
+
+```bash
+chmod +x build_macos.sh
+./build_macos.sh
+```
+
+Çıktılar: `dist/EnglishCourseAI.app` ve dağıtım arşivi
+`dist/EnglishCourseAI-macOS.zip` (uygulama paketi, içinde `LICENSE` ve
+`THIRD_PARTY_NOTICES.md`). Depodaki **macOS Paketi** iş akışı
+(`.github/workflows/build-macos.yml`) aynı betiği GitHub'ın macOS koşucusunda
+çalıştırır; yalnızca elle tetiklenir. Paket imzalanmaz ve notarize edilmez.
 
 ## Yerel AI kurulumu
 

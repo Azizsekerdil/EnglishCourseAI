@@ -40,12 +40,23 @@ python .\English_Course_AI.pyw
 
 ## Windows EXE üretimi
 
+Paket **temiz bir sanal ortamdan** derlenir; böylece yalnızca `requirements.txt`
+içindeki kütüphaneler pakete girer. Genel `site-packages` kullanılırsa
+uygulamanın hiç çağırmadığı kütüphaneler de EXE'ye girer ve dosya gereksiz yere
+büyür.
+
 ```powershell
-python -m pip install -r requirements-dev.txt
+python -m venv $env:TEMP\EnglishCourseAI-venv
+& "$env:TEMP\EnglishCourseAI-venv\Scripts\python.exe" -m pip install -r requirements.txt pyinstaller
+$env:PYTHON = "$env:TEMP\EnglishCourseAI-venv\Scripts\python.exe"
 .\build.bat
 ```
 
-Çıktı: `dist\EnglishCourseAI.exe`. `build`, `dist` ve kullanıcı verileri Git deposuna alınmaz.
+`PYTHON` tanımlı değilse `build.bat` sistemdeki `python` komutunu kullanır.
+Çıktılar: `dist\EnglishCourseAI.exe` ve dağıtım arşivi
+`dist\EnglishCourseAI-Windows.zip` (EXE + `LICENSE` + `THIRD_PARTY_NOTICES.md`).
+`build`, `dist` ve kullanıcı verileri Git deposuna alınmaz. Testleri çalıştırmak
+için `python -m pip install -r requirements-dev.txt`.
 
 ## Yerel AI kurulumu
 

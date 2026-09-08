@@ -1,11 +1,20 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-python -m PyInstaller --noconfirm --clean EnglishCourseAI.spec
+
+rem Paketleme TEMIZ bir sanal ortamdan yapilmalidir. PYTHON degiskeniyle o
+rem ortamin yorumlayicisini verin; aksi halde genel site-packages icindeki
+rem ilgisiz kutuphaneler (pandas, lxml, ...) de EXE'ye girer.
+rem   python -m venv %TEMP%\EnglishCourseAI-venv
+rem   %TEMP%\EnglishCourseAI-venv\Scripts\pip install -r requirements.txt pyinstaller
+rem   set "PYTHON=%TEMP%\EnglishCourseAI-venv\Scripts\python.exe" ^&^& build.bat
+if "%PYTHON%"=="" set "PYTHON=python"
+
+"%PYTHON%" -m PyInstaller --noconfirm --clean EnglishCourseAI.spec
 if errorlevel 1 exit /b %errorlevel%
 
 rem Dagitim ZIP'i: lisans metinleri EXE'nin yaninda da yer almalidir.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Force -Path 'dist\EnglishCourseAI.exe','LICENSE','THIRD_PARTY_NOTICES.md' -DestinationPath 'dist\EnglishCourseAI-Windows.zip'"
+"%PYTHON%" tools\make_release_zip.py
 if errorlevel 1 exit /b %errorlevel%
 
 echo Built: %CD%\dist\EnglishCourseAI.exe

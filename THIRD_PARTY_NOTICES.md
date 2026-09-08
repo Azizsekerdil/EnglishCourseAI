@@ -11,9 +11,13 @@ in the binaries published with a release. Every licence below was read from the 
 package metadata or from the component's own licence file; none of them is guessed.
 
 Versions in the tables are the versions that were actually inspected: pypdf from
-`requirements.txt`, and everything else from the packaged **v1.2.1** artifacts
+`requirements.txt`, and everything else from the packaged **v1.3.0** artifacts
 (`dist/EnglishCourseAI.exe`, built on Windows with CPython 3.11.9, and the macOS
 `EnglishCourseAI.app` produced by `.github/workflows/build-macos.yml`).
+
+Both artifacts are now frozen from a **clean virtual environment** that contains only
+`requirements.txt` plus PyInstaller, so the binaries carry the application, pypdf and
+CPython's own runtime - and nothing else. Section 3 records what this changed.
 
 ---
 
@@ -23,7 +27,7 @@ This is the only third-party package a source checkout installs (`requirements.t
 
 | Component | Version | Licence | Used for |
 |---|---|---|---|
-| [pypdf](https://github.com/py-pdf/pypdf) | 6.13.2 (`>=5.0,<7`) | BSD-3-Clause | The PDF Reader tab: opening a local PDF and extracting the text of a page. |
+| [pypdf](https://github.com/py-pdf/pypdf) | 6.18.0 (`>=5.0,<7`) | BSD-3-Clause | The PDF Reader tab: opening a local PDF and extracting the text of a page. |
 
 Everything else the application imports comes from the Python standard library
 (`tkinter`, `sqlite3`, `urllib`, `ctypes`, `zipfile`, `csv`, ...).
@@ -66,7 +70,7 @@ for exactly those releases.
 | Component | Version | Licence | Used for |
 |---|---|---|---|
 | OpenSSL | 3.0.13 (`libcrypto-3.dll`, `libssl-3.dll`, `libcrypto.3.dylib`, `libssl.3.dylib`) | Apache-2.0 | TLS for `urllib` when the optional remote AI endpoint is used, and hashing for `hashlib`. |
-| PyInstaller runtime hooks (`pyi_rth_inspect`, `pyi_rth__tkinter`, `pyi_rth_pkgutil`, `pyi_rth_multiprocessing`, and from pyinstaller-hooks-contrib `pyi_rth_cryptography_openssl`) | PyInstaller 6.21.0 / pyinstaller-hooks-contrib 2026.6 | Apache-2.0 | Small startup scripts embedded in the binary that repoint `tkinter`, `pkgutil` and similar machinery at the frozen layout. Both projects licence their `rthooks` directories under Apache-2.0 specifically so they can be shipped this way. |
+| PyInstaller runtime hooks (`pyi_rth_inspect`, `pyi_rth__tkinter`, `pyi_rth_pkgutil`, `pyi_rth_multiprocessing`, and from pyinstaller-hooks-contrib `pyi_rth_cryptography_openssl`) | PyInstaller 6.22.2 / pyinstaller-hooks-contrib 2026.7 | Apache-2.0 | Small startup scripts embedded in the binary that repoint `tkinter`, `pkgutil` and similar machinery at the frozen layout. Both projects licence their `rthooks` directories under Apache-2.0 specifically so they can be shipped this way. |
 
 *Obligation:* Apache-2.0 requires the licence text and attribution to travel with the
 binary, and EnglishCourseAI's own MIT licence asks for the same. Both build scripts
@@ -74,9 +78,10 @@ therefore embed a copy of this file and of `LICENSE` in the frozen application:
 `EnglishCourseAI.spec` adds them to `dist/EnglishCourseAI.exe`, and `build_macos.sh`
 adds them to `EnglishCourseAI.app`, where they land in `Contents/Resources/` and are
 checked for before the release archive is made. On Windows the release ZIP
-(`dist/EnglishCourseAI-Windows.zip`, produced by `build.bat`) additionally carries both
-files next to the executable, so they can be read without running it. The v1.2.1
-archives were published before this was wired up and do not contain them.
+(`dist/EnglishCourseAI-Windows.zip`, produced by `build.bat` through
+`tools/make_release_zip.py`) additionally carries both files next to the executable, so
+they can be read without running it. The v1.2.1 and earlier archives were published
+before this was wired up and do not contain them; v1.3.0 is the first release that does.
 
 ### Proprietary but freely redistributable
 
@@ -88,7 +93,7 @@ archives were published before this was wired up and do not contain them.
 
 | Component | Version | Licence | Used for |
 |---|---|---|---|
-| PyInstaller bootloader (the embedded native launcher stub) and the Python loader modules it runs (`pyiboot01_bootstrap`, `pyimod01_archive`, `pyimod02_importers`, `pyimod03_ctypes`, `pyimod04_pywin32`) | 6.21.0 | GPL-2.0-or-later **WITH** the PyInstaller bootloader exception | The native stub that unpacks the archive and starts CPython inside the frozen binary, plus the bootstrap and import machinery that stub executes. PyInstaller's `COPYING.txt` lists `./bootloader/` **and** `./PyInstaller/loader` as the "Bootloader and Related Files" the exception covers, and each loader module carries `SPDX-License-Identifier: (GPL-2.0-or-later WITH Bootloader-exception)`. |
+| PyInstaller bootloader (the embedded native launcher stub) and the Python loader modules it runs (`pyiboot01_bootstrap`, `pyimod01_archive`, `pyimod02_importers`, `pyimod03_ctypes`, `pyimod04_pywin32`) | 6.22.2 | GPL-2.0-or-later **WITH** the PyInstaller bootloader exception | The native stub that unpacks the archive and starts CPython inside the frozen binary, plus the bootstrap and import machinery that stub executes. PyInstaller's `COPYING.txt` lists `./bootloader/` **and** `./PyInstaller/loader` as the "Bootloader and Related Files" the exception covers, and each loader module carries `SPDX-License-Identifier: (GPL-2.0-or-later WITH Bootloader-exception)`. |
 
 *Obligation / why this is fine:* PyInstaller's own licence grants "unlimited permission
 to link or embed compiled bootloader and related files into combinations with other
@@ -99,88 +104,49 @@ Only modification and standalone redistribution of the bootloader and its loader
 stay under the GPL.
 
 **Note on UPX.** `EnglishCourseAI.spec` sets `upx=True`, but UPX was not installed on the
-machine that produced the published v1.2.1 executable, so that binary is not UPX-packed
+machine that produced the published v1.3.0 executable, so that binary is not UPX-packed
 (no UPX signature is present in it). If a future build machine has UPX on `PATH`, UPX is
 GPL-2.0-or-later with a special exception that explicitly permits distributing the
 compressed executables it produces under any licence.
 
 ---
 
-## 3. Extra libraries inside the published **Windows** v1.2.1 executable
+## 3. What the clean build removed (was in the Windows v1.2.1 executable)
 
 pypdf imports Pillow, cryptography and fontTools lazily for optional features (image
 extraction, AES-encrypted PDFs, embedded fonts). PyInstaller follows those imports, so
 when those packages happen to be installed on the build machine they are collected into
 the executable together with their own dependencies. That is what happened for the
-published Windows v1.2.1 binary; the list below is what a byte-level inventory of
-`dist/EnglishCourseAI.exe` actually contains.
+published Windows v1.2.1 binary, which was frozen from a developer machine's global
+`site-packages`: it also carried Pillow, fontTools, lxml, NumPy with OpenBLAS,
+cryptography, beautifulsoup4, PyYAML, pywin32 and their companions - none of which this
+application ever calls.
 
-The macOS workflow installs only `requirements.txt` into a clean runner, so the macOS
-`.app` contains **none** of the packages in this section.
+From **v1.3.0** onwards the Windows executable is built exactly the way the macOS `.app`
+already was: in a throwaway virtual environment that holds only `requirements.txt`
+(pypdf) plus PyInstaller. A run of the build therefore collects only
 
-### MIT family
+| Group | What is inside the v1.3.0 executable |
+|---|---|
+| The application | `eca` (23 modules) and `English_Course_AI.pyw` |
+| Declared dependency | `pypdf` 6.18.0 (55 modules), BSD-3-Clause - section 1 |
+| Runtime | CPython 3.11.9's own standard library and the native libraries of section 2 (`python311.dll`, `tcl86t.dll`, `tk86t.dll`, `sqlite3.dll`, `libssl-3.dll`, `libcrypto-3.dll`, `libffi-8.dll`, `VCRUNTIME140.dll` and CPython's `.pyd` extension modules) |
+| Data | `assets/`, `Resources/`, `grammar/`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, and Tcl/Tk's own data files |
 
-| Component | Version | Licence | Used for |
-|---|---|---|---|
-| Pillow | 12.2.0 | MIT-CMU | pypdf's optional image-extraction path. |
-| fontTools | 4.63.0 | MIT | pypdf's optional embedded-font handling. |
-| beautifulsoup4 | 4.15.0 | MIT | Pulled in by `lxml.html.soupparser`; never called by this application. |
-| soupsieve | 2.8.4 | MIT | CSS selector engine used by beautifulsoup4. |
-| charset-normalizer | 3.4.7 | MIT | Encoding detection for beautifulsoup4 (the mypyc-compiled `81d243bd...__mypyc.pyd` belongs to it). |
-| PyYAML | 6.0.3 | MIT | Read by `numpy.__config__` when NumPy reports its build configuration. |
-| cffi (`_cffi_backend`) | 2.0.0 | MIT | Collected by PyInstaller's `cryptography` hook. cryptography 50 binds OpenSSL through Rust (`cryptography/hazmat/bindings/_rust.pyd`) and imports no cffi, so only the `_cffi_backend` extension is present - the `cffi` Python package is not even in the archive - and nothing calls it. |
-| libxml2 / libxslt | statically linked into `lxml/etree.pyd` | MIT | The XML and XSLT engines behind lxml. |
-| Little CMS 2 | statically linked into `PIL/_imagingcms.pyd` | MIT | Pillow's colour-management module. |
+`build/EnglishCourseAI/Analysis-00.toc` for the v1.3.0 build lists no third-party
+top-level package other than `pypdf`, and a byte scan of `dist/EnglishCourseAI.exe`
+finds no `numpy`, `pandas`, `lxml`, `PIL`, `fontTools`, `cryptography`,
+`charset_normalizer`, `bs4`, `yaml` or `defusedxml`. The executable shrank from
+42,521,596 to 14,920,000 bytes.
 
-### BSD family
-
-| Component | Version | Licence | Used for |
-|---|---|---|---|
-| lxml | 6.1.1 | BSD-3-Clause | Optional XML backend reachable from fontTools. |
-| lxml_html_clean | 0.4.5 | BSD-3-Clause | Companion package of `lxml.html`. |
-| NumPy | 2.4.6 | BSD-3-Clause (the wheel additionally carries 0BSD, MIT, Zlib and CC0-1.0 for vendored pieces) | Pulled in by Pillow's array interface. |
-| OpenBLAS including LAPACK (`numpy.libs/libscipy_openblas64_-*.dll`) | shipped with NumPy 2.4.6 | BSD-3-Clause | NumPy's linear-algebra kernels. |
-| pywin32 (`win32/win32pdh.pyd`, `pywin32_system32/pywintypes311.dll`) | 312 | BSD-3-Clause style, (c) 1994-2008 Mark Hammond, per `win32/License.txt`, the licence file that governs the bundled files (the PyPI classifier records it as PSF) | Pulled in by NumPy's optional Windows performance-counter probe. |
-| libjpeg-turbo, libtiff, OpenJPEG, libwebp, zlib-ng and XZ/liblzma, statically linked into `PIL/_imaging.pyd` and `PIL/_webp.pyd` | shipped with Pillow 12.2.0 | IJG / BSD-3-Clause, libtiff licence (BSD-style), BSD-2-Clause, BSD-3-Clause, Zlib, 0BSD | Pillow's image codecs. |
-| libavif with libaom, dav1d and libyuv, statically linked into `PIL/_avif.pyd` | shipped with Pillow 12.2.0 | BSD-2-Clause, BSD-2-Clause-Patent, and BSD-3-Clause for libyuv, (c) 2011 The LibYuv Project Authors (recorded in Pillow's own `LICENSE`) | Pillow's AVIF codec; libyuv provides its plane scaling. |
-| ISO Schematron RELAX NG schema and XSLT skeleton (`lxml/isoschematron/resources/`) | shipped with lxml 6.1.1 | zlib-style permissive licence, (c) Rick Jelliffe and Academia Sinica Computing Center; the schema itself is an ISO/IEC publicly available specification | Data files lxml installs alongside its Schematron support. |
-
-### Python Software Foundation family
-
-| Component | Version | Licence | Used for |
-|---|---|---|---|
-| defusedxml | 0.7.1 | PSF-2.0 | Hardened XML parsing that Pillow uses when it is available. |
-| typing_extensions | 4.15.0 | PSF-2.0 | Typing back-ports imported by several of the packages above. |
-
-### Dual-licensed, permissive either way
-
-| Component | Version | Licence | Used for |
-|---|---|---|---|
-| cryptography | 50.0.0 | Apache-2.0 **OR** BSD-3-Clause, at the recipient's choice | pypdf's optional support for AES-encrypted PDFs. |
-
-The executable already carries `cryptography-50.0.0.dist-info/licenses/` and that
-project's CycloneDX SBOMs, which cover the Rust crates vendored into
-`cryptography/hazmat/bindings/_rust.pyd`. NumPy's own `LICENSE.txt`, with all of its
-vendored notices, is embedded too.
-
-### Copyleft with an explicit distribution exception
-
-| Component | Licence | Used for |
-|---|---|---|
-| GCC/gfortran runtime, statically linked into `numpy.libs/libscipy_openblas64_-*.dll` | GPL-3.0-or-later **WITH** GCC-exception-3.1 (GCC Runtime Library Exception) | Fortran runtime support for the OpenBLAS kernels NumPy ships. |
-
-*Obligation / why this is fine:* NumPy's own `LICENSE.txt`, embedded in the executable,
-documents this component. The GCC Runtime Library Exception exists specifically to
-"allow compilation of non-GPL (including proprietary) programs to use ... the header
-files and runtime libraries covered by this Exception", so the GPL does **not** propagate
-to EnglishCourseAI and the application may be published under MIT.
-
-### Verified absent
-
-`PIL/_imagingft.pyd` - the Pillow extension that statically links FreeType, Raqm and
-**FriBidi (LGPL-2.1-or-later)** - is *not* collected into the executable, because the
-application never imports `PIL.ImageFont`. No LGPL-licensed component is present in any
-published artifact.
+The licence obligations of the removed packages therefore no longer apply to any
+published v1.3.0 artifact. Two of them are worth naming explicitly, because they were
+the only copyleft-derived components outside PyInstaller in the older Windows binary:
+the GCC/gfortran runtime statically linked into NumPy's OpenBLAS
+(GPL-3.0-or-later WITH GCC-exception-3.1) is gone with NumPy, and `PIL/_imagingft.pyd`
+- the Pillow extension that links FriBidi (LGPL-2.1-or-later) - was never collected in
+the first place, because the application does not import `PIL.ImageFont`. **No LGPL- or
+AGPL-licensed component is present in any published artifact.**
 
 ---
 
@@ -188,8 +154,8 @@ published artifact.
 
 | Component | Version | Licence | Used for |
 |---|---|---|---|
-| PyInstaller | 6.21.0 (`>=6.0,<7`) | GPL-2.0-or-later WITH the bootloader exception | Produces `dist/EnglishCourseAI.exe` and `EnglishCourseAI.app`. Of PyInstaller itself, only the bootloader stub, its `PyInstaller/loader` modules and the Apache-2.0 runtime hooks described in section 2 end up in the binary. |
-| pyinstaller-hooks-contrib | 2026.6 | GPL-2.0-or-later for the standard (build-time) hooks; Apache-2.0 for the runtime hooks | Packaging hooks consulted at build time. The GPL-licensed standard hooks run on the build machine and are never embedded; only the Apache-2.0 runtime hook listed in section 2 is shipped. |
+| PyInstaller | 6.22.2 (`>=6.0,<7`) | GPL-2.0-or-later WITH the bootloader exception | Produces `dist/EnglishCourseAI.exe` and `EnglishCourseAI.app`. Of PyInstaller itself, only the bootloader stub, its `PyInstaller/loader` modules and the Apache-2.0 runtime hooks described in section 2 end up in the binary. |
+| pyinstaller-hooks-contrib | 2026.7 | GPL-2.0-or-later for the standard (build-time) hooks; Apache-2.0 for the runtime hooks | Packaging hooks consulted at build time. The GPL-licensed standard hooks run on the build machine and are never embedded; only the Apache-2.0 runtime hook listed in section 2 is shipped. |
 | pytest | 9.1.1 (`>=8.0,<10`) | MIT | Runs the test suite. Never shipped. |
 | Python-Markdown | 3.10.3 (`>=3.5,<4`) | BSD-3-Clause | Renders `docs/*.md` into the HTML that `tools/build_guides.py` prints to the guide PDFs. Never shipped. |
 
@@ -243,12 +209,13 @@ into it are their own and are never redistributed by this project.
 * No GPL-, LGPL- or AGPL-licensed library is imported by the source tree, listed in
   `requirements.txt`, or linked into a published artifact under terms that would affect
   EnglishCourseAI.
-* Only two GPL-derived projects reach a published binary - PyInstaller, through its
-  bootloader stub and the loader modules that stub runs, and the GCC/gfortran runtime
-  statically linked inside NumPy's OpenBLAS - and each carries an explicit exception
-  written to permit exactly this kind of distribution. Of the other PyInstaller code
-  embedded in the binary, the `rthooks` startup scripts are Apache-2.0; the
-  GPL-licensed build-time hooks run on the build machine and are never shipped.
+* Only one GPL-derived project reaches a published v1.3.0 binary: PyInstaller, through
+  its bootloader stub and the loader modules that stub runs, and it carries an explicit
+  exception written to permit exactly this kind of distribution. Of the other PyInstaller
+  code embedded in the binary, the `rthooks` startup scripts are Apache-2.0; the
+  GPL-licensed build-time hooks run on the build machine and are never shipped. (The
+  second such component in the old Windows binary, the GCC/gfortran runtime inside
+  NumPy's OpenBLAS, left with NumPy when the build moved to a clean environment.)
 * Everything else is BSD, MIT, Zlib, Apache-2.0, PSF-2.0, public domain, or a freely
   redistributable Microsoft runtime.
 

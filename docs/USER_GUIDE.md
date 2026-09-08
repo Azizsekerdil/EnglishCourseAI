@@ -1,6 +1,6 @@
 # English Course AI - User Guide
 
-Version 1.2.1 · Windows and macOS desktop application · Interface languages: Turkish and English
+Version 1.3.0 · Windows and macOS desktop application · Interface languages: Turkish and English
 
 - [1. About this guide](#1-about-this-guide)
 - [2. Installation](#2-installation)
@@ -19,7 +19,7 @@ Version 1.2.1 · Windows and macOS desktop application · Interface languages: T
 
 ## 1. About this guide
 
-This guide covers **English Course AI** version **1.2.1**. The application is a self-contained English study workspace built for learners whose first language is Turkish, and it keeps your data on your own computer. Review, the dictionary, the labs, exams, PDF notes and progress all work without an internet connection; the AI features are optional.
+This guide covers **English Course AI** version **1.3.0**. The application is a self-contained English study workspace built for learners whose first language is Turkish, and it keeps your data on your own computer. Review, the dictionary, the labs, exams, PDF notes and progress all work without an internet connection; the AI features are optional.
 
 You do not have to read it end to end: if you are just starting, sections [2](#2-installation), [3](#3-first-launch) and [4](#4-screens) are enough; section [5](#5-the-dictionary-in-detail) is for heavy dictionary use, section [6](#6-artificial-intelligence) for connecting an AI provider, and section [9](#9-troubleshooting) for when something does not behave as expected. Button and field names are given as the English interface shows them, with the Turkish label in parentheses where that helps.
 
@@ -31,7 +31,7 @@ You do not have to read it end to end: if you are just starting, sections [2](#2
 2. Extract the zip into a folder (do not run it from inside the archive).
 3. Double-click `EnglishCourseAI.exe`.
 
-There is no setup wizard, no administrator right and no registry change; the application is a single file and its first start may take a few seconds.
+There is no setup wizard, no administrator right and no registry change; the application is a single file and its first start may take a few seconds. Next to `EnglishCourseAI.exe` the zip also carries the project's `LICENSE` (MIT) and `THIRD_PARTY_NOTICES.md`; the same two files are embedded inside the executable.
 
 ### macOS (zip, Apple Silicon)
 
@@ -39,7 +39,7 @@ There is no setup wizard, no administrator right and no registry change; the app
 2. The application is **not notarized**: on the first launch, **right-click** the icon (or Control-click it), choose **Open**, and press **Open** again in the warning dialog.
 3. You grant this permission once; afterwards a double-click is enough.
 
-The package targets Apple Silicon and its bundle identifier is `com.englishcourseai.desktop`.
+The package targets Apple Silicon and its bundle identifier is `com.englishcourseai.desktop`. `LICENSE` and `THIRD_PARTY_NOTICES.md` live inside the bundle, in `EnglishCourseAI.app/Contents/Resources/`.
 
 ### Running from source
 
@@ -74,7 +74,7 @@ $env:ECA_HOME = "E:\EnglishCourseAI-data"
 
 ## 3. First launch
 
-The window opens at 1360 × 860 (minimum 1080 × 700) and the title bar reads `English Course AI 1.2.1`. There is a grouped page list on the left, a toolbar at the top and a status bar at the bottom. The top bar holds the page title, the `🌐` icon with the **interface language** box (`Türkçe` / `English`), the **+** button that creates a profile, the **profile** box, and at the far right the `AI: Available` / `AI: Unavailable` badge.
+The window opens at 1360 × 860 (minimum 1080 × 700) and the title bar reads `English Course AI 1.3.0`. There is a grouped page list on the left, a toolbar at the top and a status bar at the bottom. The top bar holds the page title, the `🌐` icon with the **interface language** box (`Türkçe` / `English`), the **+** button that creates a profile, the **profile** box, and at the far right the `AI: Available` / `AI: Unavailable` badge.
 
 On the first launch the application asks you for nothing: it creates the data folder and the `EnglishCourseAI.db` database, creates a default profile named `Alex`, loads the built-in 162-word A1-level starter set into the Word Bank (the words are spread over 20 topical decks such as Temel, Fiiller and Yiyecek), and prepares the 1,210-entry built-in dictionary (no download needed).
 
@@ -483,6 +483,7 @@ The application has no menu accelerators; the following are the real shortcuts d
 | **v1.1.2** | Dictionary AI polish: cleanup of the extra field, a direction label after an AI answer, the toolbar moved onto its own row, repeated senses removed |
 | **v1.2.0** | The **direction selector**: `Auto`, `EN → TR`, `TR → EN`; a fixed direction searches only its source side and the choice is saved with the settings. Turkish is handled as a full third language in the dictionary engine, and CSV import recognises the header row and accepts the columns in any order |
 | **v1.2.1** | **ASCII and capital-letter support in Turkish lookup**: `sinav` = `SINAV` = `sınav`, `cok` = `çok`, `ogrenci` = `öğrenci`. The Turkish column is folded to ASCII for comparison, the displayed spelling never changes, and a folded match is ranked below a direct one, so someone who types `ask` still gets the English word. This **user guide** (Turkish and English) was also added to the repository; the PDF version is published with the release assets |
+| **v1.3.0** | The project is published under the **MIT License**; `LICENSE` and `THIRD_PARTY_NOTICES.md` were added at the repository root and now travel inside the distributed packages as well (the Windows `.zip` and `.exe`, the macOS `.app`). The packages are built in a **clean virtual environment**: only the libraries listed in `requirements.txt` are collected, the file size drops, and the third-party notice ships with the package |
 
 ## 11. Frequently asked questions
 

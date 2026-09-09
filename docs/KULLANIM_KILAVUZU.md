@@ -56,7 +56,7 @@ macOS ve Linux'ta ortamı `source .venv/bin/activate` ile açar, `python English
 
 ### Verileriniz nerede tutuluyor?
 
-Öğrenci verileri programın yanında değil, ayrı bir kullanıcı klasöründe saklanır: Windows'ta `%APPDATA%\EnglishCourseAI`, diğer sistemlerde `~/.englishcourseai`.
+Öğrenci verileri programın yanında değil, ayrı bir kullanıcı klasöründe saklanır: Windows'ta `%APPDATA%\EnglishCourseAI`, macOS'ta `~/Library/Application Support/EnglishCourseAI`, diğer sistemlerde `~/.englishcourseai`.
 
 | Alt klasör | İçerik |
 | --- | --- |
@@ -471,7 +471,7 @@ Uygulamada menü kısayolu yoktur; aşağıdakiler kodda tanımlı gerçek kısa
 
 **exe açılmıyor.** Zip'i çıkarmadan içinden çalıştırmayın. SmartScreen uyarırsa **Ek bilgi → Yine de çalıştır**'ı seçin. Bazı virüs korumaları PyInstaller ile paketlenmiş dosyaları karantinaya alır; karantina listesine bakın ve gerekirse klasörü ayrıcalıklı listeye ekleyin. `%APPDATA%` yazma korumalıysa uygulama veri klasörünü oluşturamaz; `ECA_HOME` ile yazılabilir bir klasör gösterin.
 
-**Verilerim nerede?** Tam yol **Çevrimdışı Kılavuz** sayfasının en altında yazılıdır: Windows'ta `%APPDATA%\EnglishCourseAI`, diğer sistemlerde `~/.englishcourseai`. `ECA_HOME` tanımlıysa o klasör geçerlidir.
+**Verilerim nerede?** Tam yol **Çevrimdışı Kılavuz** sayfasının en altında yazılıdır: Windows'ta `%APPDATA%\EnglishCourseAI`, macOS'ta `~/Library/Application Support/EnglishCourseAI`, diğer sistemlerde `~/.englishcourseai`. `ECA_HOME` tanımlıysa o klasör geçerlidir.
 
 ## 10. Sürüm notları özeti
 

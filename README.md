@@ -59,7 +59,7 @@ python -m pip install -r requirements.txt
 python .\English_Course_AI.pyw
 ```
 
-Öğrenci verileri Windows'ta `%APPDATA%\EnglishCourseAI`, macOS'ta `~/.englishcourseai` altında tutulur. Test veya taşınabilir deneme için `ECA_HOME` ortam değişkeniyle ayrı bir klasör seçilebilir.
+Öğrenci verileri Windows'ta `%APPDATA%\EnglishCourseAI`, macOS'ta `~/Library/Application Support/EnglishCourseAI` altında tutulur. Test veya taşınabilir deneme için `ECA_HOME` ortam değişkeniyle ayrı bir klasör seçilebilir.
 
 ## Paket üretimi (Windows ve macOS)
 

@@ -56,7 +56,7 @@ On macOS and Linux you activate the environment with `source .venv/bin/activate`
 
 ### Where your data is kept
 
-Learner data is not stored next to the program but in a separate user folder: `%APPDATA%\EnglishCourseAI` on Windows, `~/.englishcourseai` on other systems.
+Learner data is not stored next to the program but in a separate user folder: `%APPDATA%\EnglishCourseAI` on Windows, `~/Library/Application Support/EnglishCourseAI` on macOS, `~/.englishcourseai` on other systems.
 
 | Sub-folder | Content |
 | --- | --- |
@@ -471,7 +471,7 @@ The application has no menu accelerators; the following are the real shortcuts d
 
 **The exe will not start.** Do not run it from inside the zip; extract it first. If SmartScreen warns you, choose **More info → Run anyway**. Some antivirus products quarantine PyInstaller-packaged files; check the quarantine list and add the folder to the exclusions if necessary. If `%APPDATA%` is write-protected the application cannot create its data folder; point `ECA_HOME` at a writable folder.
 
-**Where is my data?** The full path is printed at the bottom of the **Offline Guide** page: `%APPDATA%\EnglishCourseAI` on Windows, `~/.englishcourseai` on other systems. If `ECA_HOME` is set, that folder wins.
+**Where is my data?** The full path is printed at the bottom of the **Offline Guide** page: `%APPDATA%\EnglishCourseAI` on Windows, `~/Library/Application Support/EnglishCourseAI` on macOS, `~/.englishcourseai` on other systems. If `ECA_HOME` is set, that folder wins.
 
 ## 10. Release notes summary
 
